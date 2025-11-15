@@ -5,7 +5,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import LoginScene from './components/login/LoginScene';
 import LoginForm from './components/login/LoginForm';
 import RegisterForm from './components/login/RegisterForm';
-import DashboardShell from './components/dashboard/DashboardShell';
+import DashboardShell from './components/DashboardShell';
 
 import './styles.css';
 
@@ -32,7 +32,7 @@ function App() {
   return (
     <div className="App">
       {user ? (
-        <DashboardShell loggedIn={true} />
+        <DashboardShell />
       ) : (
         <LoginScene>
           {isRegistering ? (

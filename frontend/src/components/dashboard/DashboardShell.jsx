@@ -2,6 +2,10 @@
 import React from 'react';
 import { auth } from '../../firebase';
 import { signOut } from 'firebase/auth';
+// ADD THESE NEW COMPONENTS TO YOUR DASHBOARD
+import DominanceMetricsPanel from './DominanceMetricsPanel';
+import GlobalConsciousnessPanel from './GlobalConsciousnessPanel';
+import EnergyRevolutionPanel from './EnergyRevolutionPanel';
 
 export default function DashboardShell({ loggedIn }) {
   const handleLogout = async () => {
@@ -24,6 +28,12 @@ export default function DashboardShell({ loggedIn }) {
       </div>
       <div style={styles.content}>
         <p>This is your dashboard. You can add your components and content here.</p>
+      </div>
+      {/* ADD THESE NEW PANELS */}
+      <div className="advanced-controls-grid">
+        <GlobalConsciousnessPanel />
+        <EnergyRevolutionPanel />
+        <DominanceMetricsPanel />
       </div>
     </div>
   );

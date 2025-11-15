@@ -35,34 +35,32 @@ export default function CosmicDust(props) {
     return [initial, final];
   }, [count, torusRadius, torusTubeRadius]);
 
-  // The buffer that will be animated and rendered
-  const animatedPositions = useMemo(() => new Float32Array(initialPositions), [initialPositions]);
+  const animation = useMemo(() => ({ progress: 0 }), []);
 
   useEffect(() => {
     // Animate from initial to final positions over 3 seconds
-    gsap.to(animatedPositions, {
+    gsap.to(animation, {
       duration: 3,
+      progress: 1,
       ease: 'power2.inOut',
-      onUpdate: function() {
-        for (let i = 0; i < count * 3; i++) {
-          const t = this.progress();
-          animatedPositions[i] = THREE.MathUtils.lerp(initialPositions[i], finalPositions[i], t);
-        }
-        ref.current.geometry.attributes.position.needsUpdate = true;
-      },
-      // Optional: Add a delay or repeat as needed
       delay: 1, // Start animation after 1 second
     });
-  }, [animatedPositions, initialPositions, finalPositions, count]);
+  }, [animation]);
 
   useFrame((state, delta) => {
-    // You can add continuous rotation here if desired, even during/after the animation
-    ref.current.rotation.x += delta / 20;
-    ref.current.rotation.y += delta / 30;
+    if (ref.current) {
+      const positions = ref.current.geometry.attributes.position.array;
+      for (let i = 0; i < count * 3; i++) {
+        positions[i] = THREE.MathUtils.lerp(initialPositions[i], finalPositions[i], animation.progress);
+      }
+      ref.current.geometry.attributes.position.needsUpdate = true;
+      ref.current.rotation.x += delta / 20;
+      ref.current.rotation.y += delta / 30;
+    }
   });
 
   return (
-    <Points ref={ref} positions={animatedPositions} stride={3} frustumCulled={false} {...props}>
+    <Points ref={ref} positions={initialPositions} stride={3} frustumCulled={false} {...props}>
       <PointMaterial
         transparent
         color="#ffd700" // mystic-gold

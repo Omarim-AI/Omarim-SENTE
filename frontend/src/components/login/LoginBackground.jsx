@@ -4,12 +4,11 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
 
-import CentralCognitionSphere from '../dashboard/CentralCognitionSphere';
-import OMARIMLogo from '../dashboard/OMARIMLogo';
-import ParticleFlows from '../dashboard/ParticleFlows';
+import Starfield from '../dashboard/Starfield';
+import DynamicGrid from '../dashboard/DynamicGrid';
+import CosmicDust from '../dashboard/CosmicDust';
 
 export default function LoginBackground() {
-  const aiConfidence = 0.5; // Lower confidence for login screen
 
   return (
     <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: -1 }}>
@@ -24,9 +23,9 @@ export default function LoginBackground() {
         <fog attach="fog" args={['#000011', 15, 40]} />
 
         <Suspense fallback={null}>
-          <CentralCognitionSphere aiConfidence={aiConfidence} position={[0, 0, -5]}/>
-          <OMARIMLogo aiConfidence={aiConfidence} />
-          <ParticleFlows />
+          <Starfield />
+          <DynamicGrid />
+          <CosmicDust />
         </Suspense>
 
         <OrbitControls enableZoom={false} enablePan={false} autoRotate={true} autoRotateSpeed={0.1} />
