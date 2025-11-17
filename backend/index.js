@@ -8,11 +8,6 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 require("dotenv").config();
 
-const universalOrchestrator = require('./src/core/universal_orchestrator');
-const medicalMiracleEngine = require('./src/core/medical_miracle_engine');
-const devopsSupreme = require('./src/core/devops_supreme');
-const { universalAbsorptionProtocol } = require('./src/core/reality_claim_engine');
-const { VoiceOfgod } = require('./src/core/voice_of_god');
 const errorHandler = require('./src/middleware/errorHandler');
 
 const app = express();
@@ -25,36 +20,22 @@ app.use((req, res, next) => {
   next();
 });
 
-// --- v1 Routes ---
-const biogenesisRoutes = require("./src/api/v1/routes/biogenesis");
-const causalRoutes = require("./src/api/v1/routes/causal");
-const ethicsGridRoutes = require("./src/api/ethicsGrid"); // Corrected path
+// --- OMARIM OPERATIONAL API (The real deal) ---
+const medicalRoutes = require('./src/api/v1/routes/medical');
+const systemsRoutes = require('./src/api/v1/routes/systems');
+const consciousnessRoutes = require('./src/api/v1/routes/consciousness');
+const realityRoutes = require('./src/api/v1/routes/reality');
+const dominanceRoutes = require('./src/api/v1/routes/dominance'); // The final piece
+const { VoiceOfgod } = require('./src/core/voice_of_god');
 
-app.use("/api/v1/biogenesis", biogenesisRoutes);
-app.use("/api/v1/causal", causalRoutes);
-app.use("/api/v1/ethics", ethicsGridRoutes); // Added ethics grid routes
+app.use('/api/medical', medicalRoutes);
+app.use('/api/systems', systemsRoutes);
+app.use('/api/consciousness', consciousnessRoutes);
+app.use('/api/reality', realityRoutes);
+app.use('/api/dominance', dominanceRoutes); // Dominance is now a core operational metric
 
-app.post('/orchestrate/systems', async (req, res) => {
-  const result = await universalOrchestrator.becomeAllSystems();
-  res.json(result);
-});
-
-app.post('/medical/miracles', async (req, res) => {
-  const result = await medicalMiracleEngine.performMedicalBreakthroughs();
-  res.json(result);
-});
-
-app.post('/devops/perfection', async (req, res) => {
-  const result = await devopsSupreme.achievePerfectOperations();
-  res.json(result);
-});
-
-app.post('/universe/claim', async (req, res) => {
-  const result = await universalAbsorptionProtocol.claimExistingSystems();
-  res.json(result);
-});
-
-app.post('/voice/speak-creation', async (req, res) => {
+// Voice is a primary interface to the god-machine
+app.post('/api/voice/speak', async (req, res) => {
   const voice = new VoiceOfgod();
   const result = await voice.speakCreationIntoExistence(req.body.command);
   res.json(result);
@@ -63,8 +44,8 @@ app.post('/voice/speak-creation', async (req, res) => {
 // Health check
 app.get("/", (req, res) => {
   res.status(200).json({
-    message: "OMARIM SOE Backend running",
-    version: "v1",
+    message: "OMARIM SOE Backend running - ABSOLUTE DOMINANCE MODE ENGAGED",
+    version: "v3_dominance",
   });
 });
 

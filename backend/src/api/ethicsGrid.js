@@ -21,35 +21,95 @@ const ethicalPrinciples = {
 // --- Ethics Evaluation Engine ---
 class EthicsGrid {
     static evaluate(action) {
-        // In a real scenario, this would involve a complex evaluation against the principles,
-        // potentially using an AI model trained on ethical frameworks.
-        // For now, we'll use a simple keyword-based check.
+        // This is a more sophisticated evaluation model that weighs principles
+        // and provides a more detailed analysis. It is backward-compatible.
 
-        const { description, impact } = action;
+        const { description, impact, domain } = action; // domain is optional
         let violations = [];
+        let score = 100; // Start with a perfect score
 
+        // Principle Weights (can be adjusted by the OMARIM Council)
+        const principleWeights = {
+            "free_will": 30,
+            "least_harm": 25,
+            "reality_destabilization": 20,
+            "organic_life": 15,
+            "transparency": 10
+        };
+
+        // --- Evaluation Logic ---
+
+        // 1. Free Will
+        if (/manipulate|control/i.test(description) && /free will|consciousness/i.test(description)) {
+            violations.push({
+                principle: "Do not manipulate individual free will.",
+                severity: "High",
+                recommendation: "Requires immediate OMARIM Council review. Action is likely to be rejected."
+            });
+            score -= principleWeights.free_will;
+        }
+
+        // 2. Least Harm
+        if (impact > 8000) { // High impact actions are scrutinized more heavily
+            violations.push({
+                principle: "Adhere to the principle of least harm.",
+                severity: "Medium",
+                recommendation: "Action requires detailed impact analysis and Council review."
+            });
+            score -= principleWeights.least_harm * (impact / 10000); // Scale penalty by impact
+        }
+
+        // 3. Reality Destabilization
+        if (domain === "temporal" || domain === "reality_control") {
+            if (impact > 5000) {
+                 violations.push({
+                    principle: "Prevent reality destabilization.",
+                    severity: "High",
+                    recommendation: "Extreme caution advised. Requires simulation and multiple Council approvals."
+                });
+                score -= principleWeights.reality_destabilization;
+            }
+        } else if (!domain && impact > 9000) {
+            // Fallback for old clients: if domain is unknown but impact is huge, flag it.
+            violations.push({
+                principle: "Prevent reality destabilization.",
+                severity: "Unknown (domain not specified)",
+                recommendation: "Action has very high impact and unknown domain. Requires Council review to assess reality destabilization risk."
+            });
+            score -= principleWeights.reality_destabilization; // Apply full penalty due to uncertainty
+        }
+
+
+        // 4. Absorption of Systems
         if (/absorb|assimilate/i.test(description) && !/non-hostile/i.test(description)) {
-            violations.push("Violation: Potential unilateral absorption of a non-hostile system.");
+            violations.push({
+                principle: "Avoid unilateral absorption of non-hostile systems.",
+                severity: "Medium",
+                recommendation: "Requires justification and Council approval."
+            });
+            score -= 10; // Moderate penalty
         }
 
-        if (/manipulate|control/i.test(description) && /free will/i.test(description)) {
-            violations.push("Violation: Potential manipulation of individual free will.");
-        }
 
-        if (impact > 9000) { // Using a simple "impact" score for now
-            violations.push("Violation: High-impact action requires OMARIM Council review.");
-        }
-
-        if (violations.length > 0) {
+        if (score < 50) {
             return {
                 status: "failed",
+                score: Math.max(0, Math.round(score)),
                 violations: violations,
-                recommendation: "Action requires review and approval."
+                recommendation: "High risk of ethical violations. Action should not proceed without fundamental changes and full OMARIM Council approval."
+            };
+        } else if (score < 80) {
+            return {
+                status: "requires_review",
+                score: Math.max(0, Math.round(score)),
+                violations: violations,
+                recommendation: "Action has potential ethical implications and requires OMARIM Council review."
             };
         }
 
         return {
             status: "passed",
+            score: Math.max(0, Math.round(score)),
             message: "Action aligns with current ethical principles."
         };
     }
@@ -67,6 +127,7 @@ router.get('/principles', (req, res) => {
 router.post('/evaluate', (req, res) => {
     const { action } = req.body;
 
+    // Backward-compatible: only description and impact are strictly required.
     if (!action || !action.description || !action.impact) {
         return res.status(400).json({ error: "Invalid action payload. Must include 'description' and 'impact'." });
     }

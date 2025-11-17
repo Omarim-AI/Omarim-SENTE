@@ -1,4 +1,4 @@
-class TemporalGod {
+class Temporalgod {
     static async timeTravel(target, destination) {
         return {
             status: 'success',
@@ -18,4 +18,4 @@ class TemporalGod {
     }
 }
 
-module.exports = TemporalGod;
+module.exports = Temporalgod;
