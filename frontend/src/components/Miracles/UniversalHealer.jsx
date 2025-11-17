@@ -77,8 +77,36 @@ const UniversalHealer = () => {
   };
 
   const performAllMiracles = async () => {
-    for (const miracle of miracles) {
-      await performMiracle(miracle.id);
+    const miraclesToPerform = miracles.map(miracle => ({ id: miracle.id, name: miracle.name }));
+    const response = await fetch('/api/v1/medical/universal-healing', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ miracles: miraclesToPerform }),
+    });
+    const data = await response.json();
+    console.log(data);
+
+    if (response.ok) {
+      miracles.forEach(miracle => setActiveMiracle(miracle.id));
+
+      for (let i = 0; i <= 100; i++) {
+        await new Promise(resolve => setTimeout(resolve, 30));
+        const newHealingProgress = {};
+        miracles.forEach(miracle => {
+          newHealingProgress[miracle.id] = i;
+        });
+        setHealingProgress(newHealingProgress);
+
+        if (i === 100) {
+          setMiraclesPerformed(prev => prev + miracles.length);
+          setTimeout(() => {
+            miracles.forEach(miracle => setActiveMiracle(null));
+            setHealingProgress({});
+          }, 2000);
+        }
+      }
     }
   };
 

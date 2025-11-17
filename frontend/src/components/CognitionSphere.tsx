@@ -9,6 +9,8 @@ interface CognitionSphereProps {
     position: [number, number, number];
 }
 
+const AnimatedMesh = a(THREE.Mesh);
+
 const CognitionSphere: React.FC<CognitionSphereProps> = (props) => {
   const meshRef = useRef<THREE.Mesh>(null!);
   const [{ rotation }, api] = useSpring(() => ({
@@ -29,7 +31,7 @@ const CognitionSphere: React.FC<CognitionSphereProps> = (props) => {
   });
 
   return (
-    <a.mesh {...props} {...bind()} ref={meshRef} rotation={rotation as any}>
+    <AnimatedMesh {...props} {...bind()} ref={meshRef} rotation={rotation}>
       <sphereGeometry args={[1.5, 64, 64]} />
       <meshStandardMaterial
         color="#20559A"
@@ -38,7 +40,7 @@ const CognitionSphere: React.FC<CognitionSphereProps> = (props) => {
         metalness={0.9}
         roughness={0.1}
       />
-    </a.mesh>
+    </AnimatedMesh>
   );
 }
 

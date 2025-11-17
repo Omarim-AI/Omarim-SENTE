@@ -5,11 +5,7 @@ import { Points, PointMaterial } from '@react-three/drei';
 import * as THREE from 'three';
 import { gsap } from 'gsap';
 
-interface CosmicDustProps {
-    // You can define any props that CosmicDust might receive here
-}
-
-const CosmicDust: React.FC<CosmicDustProps> = (props) => {
+const CosmicDust: React.FC = () => {
   const ref = useRef<THREE.Points>(null!);
   const count = 5000;
   const torusRadius = 1;
@@ -64,7 +60,7 @@ const CosmicDust: React.FC<CosmicDustProps> = (props) => {
   });
 
   return (
-    <Points ref={ref} positions={initialPositions} stride={3} frustumCulled={false} {...props}>
+    <Points ref={ref} positions={initialPositions} stride={3} frustumCulled={false}>
       <PointMaterial
         transparent
         color="#ffd700" // mystic-gold

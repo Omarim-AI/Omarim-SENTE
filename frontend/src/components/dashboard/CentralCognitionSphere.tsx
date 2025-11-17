@@ -20,7 +20,7 @@ const CentralCognitionSphere: React.FC<CentralCognitionSphereProps> = ({ aiConfi
 
   const haloColor = useMemo(() => getHaloColor(aiConfidence), [aiConfidence]);
 
-  useFrame((state, delta) => {
+  useFrame((state) => {
     const pulse = (1 + Math.sin(state.clock.elapsedTime * 2)) / 2;
     const pulseIntensity = 0.5 + aiConfidence * 0.5;
 

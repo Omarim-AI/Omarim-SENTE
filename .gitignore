@@ -1,23 +1,31 @@
 # Dependencies
 /node_modules
-/.pnp
-.pnp.js
+/backend/node_modules
+/frontend/node_modules
 
-# Testing
-/coverage
-
-# Vite
+# Build output
+/build
 /dist
-/.vite
+/backend/dist
+/frontend/dist
 
-# Firebase
-.firebase
+# Env files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
-# Misc
-.DS_Store
+# Service account keys
+serviceAccountKey.json
+/backend/serviceAccountKey.json
+
+# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Backend
-backend/node_modules
+# IDE files
+.idea/
+.vscode/
+*.swp

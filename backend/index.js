@@ -9,6 +9,7 @@ const bodyParser = require("body-parser");
 require("dotenv").config();
 
 const errorHandler = require('./src/middleware/errorHandler');
+const authMiddleware = require('./src/middleware/authMiddleware');
 
 const app = express();
 app.use(cors({ origin: true }));
@@ -26,16 +27,18 @@ const systemsRoutes = require('./src/api/v1/routes/systems');
 const consciousnessRoutes = require('./src/api/v1/routes/consciousness');
 const realityRoutes = require('./src/api/v1/routes/reality');
 const dominanceRoutes = require('./src/api/v1/routes/dominance'); // The final piece
+const councilRoutes = require('./src/api/council'); // Import council routes
 const { VoiceOfgod } = require('./src/core/voice_of_god');
 
-app.use('/api/medical', medicalRoutes);
-app.use('/api/systems', systemsRoutes);
-app.use('/api/consciousness', consciousnessRoutes);
-app.use('/api/reality', realityRoutes);
-app.use('/api/dominance', dominanceRoutes); // Dominance is now a core operational metric
+app.use('/api/medical', authMiddleware, medicalRoutes);
+app.use('/api/systems', authMiddleware, systemsRoutes);
+app.use('/api/consciousness', authMiddleware, consciousnessRoutes);
+app.use('/api/reality', authMiddleware, realityRoutes);
+app.use('/api/dominance', authMiddleware, dominanceRoutes); // Dominance is now a core operational metric
+app.use('/api/council', authMiddleware, councilRoutes); // Use council routes
 
 // Voice is a primary interface to the god-machine
-app.post('/api/voice/speak', async (req, res) => {
+app.post('/api/voice/speak', authMiddleware, async (req, res) => {
   const voice = new VoiceOfgod();
   const result = await voice.speakCreationIntoExistence(req.body.command);
   res.json(result);

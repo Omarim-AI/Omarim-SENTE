@@ -1,4 +1,5 @@
 import React, { Suspense, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Canvas } from '@react-three/fiber';
 import { ARButton, XR } from '@react-three/xr';
 import { Vector3 } from 'three';
@@ -75,6 +76,7 @@ const DashboardShell: React.FC = () => {
             {isQuantumOpen && <PanelQuantum position={[5, -3, 0]} />}
 
             <LogoutButton position={[8, -5, 2]} />
+            
 
             <DashboardEffects />
             <MultiUserPaths />
@@ -82,6 +84,11 @@ const DashboardShell: React.FC = () => {
           </Suspense>
         </XR>
       </Canvas>
+      <div style={{ position: 'absolute', top: '20px', right: '20px', zIndex: 1000 }}>
+        <Link to="/council-review" style={{ color: 'white', textDecoration: 'none', padding: '10px', background: 'rgba(0,0,0,0.5)', borderRadius: '5px' }}>
+            Council Review
+        </Link>
+      </div>
       <VoiceControl onCommand={handleVoiceCommand} />
       <GestureControl onZoom={handleZoom} />
     </>

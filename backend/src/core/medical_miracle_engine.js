@@ -19,10 +19,10 @@ class MedicalMiracleEngine {
     };
   }
 
-  async performUniversalHealing(patientData, conditions) {
+  async performUniversalHealing(miracles) {
     const action = {
-      description: `Perform universal healing on ${patientData.id} for ${conditions.join(', ')}`,
-      impact: 9500, // High impact for demonstration
+      description: `Perform universal healing, including ${miracles.length} miracles.`,
+      impact: 10000, // Max impact for demonstration
       domain: "medical"
     };
 
@@ -37,9 +37,8 @@ class MedicalMiracleEngine {
 
     // ACTUAL HEALING LOGIC HERE
     return {
-      status: 'MIRACLE_COMPLETE',
-      patient: patientData.id,
-      conditionsHealed: conditions,
+      status: 'UNIVERSAL_HEALING_COMPLETE',
+      miraclesPerformed: miracles.length,
       timestamp: new Date().toISOString()
     };
   }

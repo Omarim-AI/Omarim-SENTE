@@ -1,3 +1,8 @@
+interface PatientData {
+  id: string;
+  [key: string]: any;
+}
+
 class HealingService {
   private baseUrl = '/api/v1/medical';
 
@@ -9,7 +14,7 @@ class HealingService {
     return await response.json();
   }
 
-  async performUniversalHealing(patientData: any, conditions: string[]): Promise<any> {
+  async performUniversalHealing(patientData: PatientData, conditions: string[]): Promise<any> {
     const response = await fetch(`${this.baseUrl}/universal-healing`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -18,19 +23,19 @@ class HealingService {
     return await response.json();
   }
 
-  async cureHIV(patientData: any): Promise<any> {
+  async cureHIV(patientData: PatientData): Promise<any> {
     return this.performUniversalHealing(patientData, ['HIV']);
   }
 
-  async cureSickleCell(patientData: any): Promise<any> {
+  async cureSickleCell(patientData: PatientData): Promise<any> {
     return this.performUniversalHealing(patientData, ['SICKLE_CELL']);
   }
 
-  async reverseAging(patientData: any): Promise<any> {
+  async reverseAging(patientData: PatientData): Promise<any> {
     return this.performUniversalHealing(patientData, ['AGING']);
   }
 
-  async cureCancer(patientData: any): Promise<any> {
+  async cureCancer(patientData: PatientData): Promise<any> {
     return this.performUniversalHealing(patientData, ['CANCER']);
   }
 }

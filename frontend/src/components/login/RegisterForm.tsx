@@ -28,8 +28,12 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin }) => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       onSwitchToLogin();
-    } catch (error: any) {
-      setError(error.message);
+    } catch (error) {
+      if (error instanceof Error) {
+          setError(error.message);
+      } else {
+          setError('An unknown error occurred.');
+      }
     } finally {
       setLoading(false);
     }

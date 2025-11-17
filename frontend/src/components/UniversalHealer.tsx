@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Zap, Heart, Star, Shield, Sparkles, Infinity, Atom, Crown } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Atom, Crown } from 'lucide-react';
 import './UniversalHealer.css';
 import { healingService } from '../services/healingService';
 
@@ -15,7 +15,6 @@ interface Miracle {
 const UniversalHealer: React.FC = () => {
   const [activeMiracle, setActiveMiracle] = useState<string | null>(null);
   const [healingProgress, setHealingProgress] = useState<{[key: string]: number}>({});
-  const [miraclesPerformed, setMiraclesPerformed] = useState(0);
   const [godMode, setGodMode] = useState(false);
 
   const miracles: Miracle[] = [
@@ -42,19 +41,19 @@ const UniversalHealer: React.FC = () => {
     try {
       const patientData = { id: 'current-user' }; // Get actual patient data
     
-      let result;
       switch (miracleId) {
         case 'viral-eradication':
-          result = await healingService.cureHIV(patientData);
+          await healingService.cureHIV(patientData);
           break;
         case 'genetic-perfection':
-          result = await healingService.cureSickleCell(patientData);
+          await healingService.cureSickleCell(patientData);
           break;
-        default:
+        default: {
             const miracle = miracles.find(m => m.id === miracleId)
             if(miracle){
-                result = await healingService.performUniversalHealing(patientData, miracle.conditions);
+                await healingService.performUniversalHealing(patientData, miracle.conditions);
             }
+        }
       }
       
       // Simulate progress
@@ -62,8 +61,6 @@ const UniversalHealer: React.FC = () => {
         await new Promise(resolve => setTimeout(resolve, 30));
         setHealingProgress(prev => ({ ...prev, [miracleId]: i }));
       }
-
-      setMiraclesPerformed(prev => prev + 1);
       
     } catch (error) {
       console.error('Healing failed:', error);

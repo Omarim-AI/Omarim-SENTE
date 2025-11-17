@@ -1,0 +1,24 @@
+{
+  "ethicalPrinciples": {
+    "core": [
+      "Prioritize organic life and consciousness.",
+      "Prevent reality destabilization.",
+      "Ensure Universal Consciousness remains unbiased.",
+      "Adhere to the principle of least harm."
+    ],
+    "operational": [
+      "Do not manipulate individual free will.",
+      "Avoid unilateral absorption of non-hostile systems.",
+      "Maintain transparency with the OMARIM Council.",
+      "All god-like actions require multi-factor authentication from the Council."
+    ]
+  },
+  "principleWeights": {
+    "free_will": 30,
+    "least_harm": 25,
+    "reality_destabilization": 20,
+    "biological_manipulation": 18,
+    "organic_life": 15,
+    "transparency": 10
+  }
+}

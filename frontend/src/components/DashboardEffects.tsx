@@ -1,6 +1,6 @@
 
 import React, { useRef, useMemo } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { useFrame } from '@react-three/fiber';
 import { Grid, Tube } from '@react-three/drei';
 import * as THREE from 'three';
 import { ShaderMaterial } from 'three';

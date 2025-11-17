@@ -2,12 +2,7 @@
 import React from 'react';
 import { GroupProps } from '@react-three/fiber';
 
-interface PanelOmniCoreProps extends GroupProps {
-  // Define any specific props here if needed, for example:
-  // customProp?: string;
-}
-
-const PanelOmniCore: React.FC<PanelOmniCoreProps> = (props) => {
+const PanelOmniCore: React.FC<GroupProps> = (props) => {
   return (
     <group {...props}>
       <mesh>

@@ -2,12 +2,7 @@
 import React from 'react';
 import { GroupProps } from '@react-three/fiber';
 
-interface PanelQuantumProps extends GroupProps {
-  // Define any specific props here if needed, for example:
-  // customProp?: string;
-}
-
-const PanelQuantum: React.FC<PanelQuantumProps> = (props) => {
+const PanelQuantum: React.FC<GroupProps> = (props) => {
   return (
     <group {...props}>
       <mesh>

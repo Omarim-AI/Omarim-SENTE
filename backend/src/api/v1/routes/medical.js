@@ -16,8 +16,8 @@ router.post('/activate-god-mode', async (req, res) => {
 
 router.post('/universal-healing', async (req, res) => {
   try {
-    const { patientData, conditions } = req.body;
-    const result = await miracleEngine.performUniversalHealing(patientData, conditions);
+    const { miracles } = req.body;
+    const result = await miracleEngine.performUniversalHealing(miracles);
     res.json(result);
   } catch (error) {
     res.status(500).json({ error: error.message });
