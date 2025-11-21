@@ -1,128 +1,118 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Atom, Crown } from 'lucide-react';
-import './UniversalHealer.css';
+import { Brain, Heart, Zap, Activity } from 'lucide-react';
 import { healingService } from '../services/healingService';
 
-interface Miracle {
-  id: string;
-  name: string;
-  description: string;
-  color: string;
-  conditions: string[];
-}
-
 const UniversalHealer: React.FC = () => {
-  const [activeMiracle, setActiveMiracle] = useState<string | null>(null);
-  const [healingProgress, setHealingProgress] = useState<{[key: string]: number}>({});
-  const [godMode, setGodMode] = useState(false);
+  const [activeTreatment, setActiveTreatment] = useState<string | null>(null);
+  const [omarimMode, setOmarimMode] = useState(false);
+  const [treatmentProgress, setTreatmentProgress] = useState(0);
 
-  const miracles: Miracle[] = [
+  const treatmentProtocols = [
     {
-      id: 'genetic-perfection',
-      name: 'Complete Genetic Perfection',
-      description: 'Eliminate all genetic disorders, perfect DNA, optimize genome',
-      color: 'from-purple-500 to-pink-500',
-      conditions: ['Sickle Cell', 'Cystic Fibrosis', 'Huntington\'s', 'All Genetic Diseases']
+      id: 'stroke-reversal',
+      name: 'Instant Stroke Reversal',
+      description: 'Complete stroke reversal in 10 minutes',
+      device: 'NRH-9000 or QHB-100',
+      icon: <Zap className="w-8 h-8" />,
+      color: 'from-red-500 to-orange-500'
     },
     {
-      id: 'viral-eradication', 
-      name: 'Total Pathogen Elimination',
-      description: 'Eradicate all viruses, bacteria, fungi from existence',
-      color: 'from-red-500 to-orange-500',
-      conditions: ['HIV/AIDS', 'COVID', 'Ebola', 'All Viral Infections']
+      id: 'brain-repair', 
+      name: 'Neural Tissue Repair',
+      description: 'Repair brain damage and regenerate neurons',
+      device: 'NRH-9000',
+      icon: <Brain className="w-8 h-8" />,
+      color: 'from-blue-500 to-cyan-500'
     },
-    // Add other miracles from previous code...
+    {
+      id: 'neural-optimization',
+      name: 'Neural Optimization',
+      description: 'Enhance brain function beyond normal levels',
+      device: 'QHB-100',
+      icon: <Activity className="w-8 h-8" />,
+      color: 'from-purple-500 to-pink-500'
+    }
   ];
 
-  const performMiracle = async (miracleId: string) => {
-    setActiveMiracle(miracleId);
-    
+  const activateOmarimMode = async () => {
     try {
-      const patientData = { id: 'current-user' }; // Get actual patient data
-    
-      switch (miracleId) {
-        case 'viral-eradication':
-          await healingService.cureHIV(patientData);
-          break;
-        case 'genetic-perfection':
-          await healingService.cureSickleCell(patientData);
-          break;
-        default: {
-            const miracle = miracles.find(m => m.id === miracleId)
-            if(miracle){
-                await healingService.performUniversalHealing(patientData, miracle.conditions);
-            }
-        }
-      }
-      
-      // Simulate progress
-      for (let i = 0; i <= 100; i++) {
-        await new Promise(resolve => setTimeout(resolve, 30));
-        setHealingProgress(prev => ({ ...prev, [miracleId]: i }));
-      }
-      
+      await healingService.activateOmarimMode();
+      setOmarimMode(true);
     } catch (error) {
-      console.error('Healing failed:', error);
-    } finally {
-      setActiveMiracle(null);
+      console.error('Omarim mode activation failed:', error);
     }
   };
 
-  const activateGodMode = async () => {
+  const startTreatment = async (protocolId: string) => {
+    if (!omarimMode) await activateOmarimMode();
+    
+    setActiveTreatment(protocolId);
+    
     try {
-      await healingService.activateGodMode();
-      setGodMode(true);
+      const patientData = { id: 'current-patient' };
+      let result;
+
+      switch (protocolId) {
+        case 'stroke-reversal':
+          result = await healingService.performStrokeReversal(patientData, 'ischemic');
+          break;
+        case 'brain-repair':
+          result = await healingService.repairBrainDamage(patientData, {});
+          break;
+      }
+
+      // Simulate treatment progress
+      for (let i = 0; i <= 100; i++) {
+        await new Promise(resolve => setTimeout(resolve, 50));
+        setTreatmentProgress(i);
+      }
+
+      console.log('Treatment completed:', result);
+      
     } catch (error) {
-      console.error('God mode activation failed:', error);
+      console.error('Treatment failed:', error);
+    } finally {
+      setActiveTreatment(null);
+      setTreatmentProgress(0);
     }
   };
 
   return (
-    <div className="universal-healer-container">
-      {/* God Mode Activation */}
-      {!godMode && (
-        <motion.div className="god-mode-activation">
-          <button onClick={activateGodMode} className="god-mode-btn">
-            <Crown className="w-6 h-6" />
-            ACTIVATE GOD MODE
+    <div className="universal-healer">
+      {/* Omarim Mode Activation */}
+      {!omarimMode && (
+        <div className="omarim-activation-panel">
+          <button onClick={activateOmarimMode} className="activate-button">
+            ACTIVATE OMARIM MODE - 5000X POWER
           </button>
-        </motion.div>
+        </div>
       )}
 
-      {/* Healing Interface */}
-      <div className="miracles-grid">
-        {miracles.map((miracle) => (
-          <motion.div
-            key={miracle.id}
-            className={`miracle-card ${miracle.color}`}
-          >
-            <div className="miracle-header">
-              <div className={`icon-container ${miracle.color}`}>
-                <Atom className="w-8 h-8" />
+      {/* Treatment Protocols */}
+      <div className="treatment-grid">
+        {treatmentProtocols.map((protocol) => (
+          <div key={protocol.id} className={`treatment-card ${protocol.color}`}>
+            <div className="protocol-header">
+              <div className="protocol-icon">
+                {protocol.icon}
               </div>
-              <h3>{miracle.name}</h3>
-            </div>
-            
-            <div className="conditions-list">
-              {miracle.conditions.map(condition => (
-                <span key={condition} className="condition-tag">
-                  {condition}
-                </span>
-              ))}
+              <h3>{protocol.name}</h3>
+              <p>{protocol.description}</p>
+              <span className="device-badge">{protocol.device}</span>
             </div>
 
             <button
-              onClick={() => performMiracle(miracle.id)}
-              disabled={activeMiracle !== null}
-              className="heal-button"
+              onClick={() => startTreatment(protocol.id)}
+              disabled={activeTreatment !== null}
+              className="treatment-button"
             >
-              {activeMiracle === miracle.id ? 
-                `HEALING... ${healingProgress[miracle.id] || 0}%` : 
-                'ACTIVATE MIRACLE'
+              {activeTreatment === protocol.id 
+                ? `TREATMENT... ${treatmentProgress}%` 
+                : 'START TREATMENT'
               }
             </button>
-          </motion.div>
+          </div>
         ))}
       </div>
     </div>

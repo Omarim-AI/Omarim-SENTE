@@ -20,7 +20,8 @@ const CosmicDust: React.FC = () => {
     for (let i = 0; i < count; i++) {
       // Initial spherical position
       const p = new THREE.Vector3();
-      p.setFromSpherical(sphere.radius * (1 + Math.random()), Math.acos(1 - 2 * Math.random()), 2 * Math.PI * Math.random());
+      const spherical = new THREE.Spherical(sphere.radius * (1 + Math.random()), Math.acos(1 - 2 * Math.random()), 2 * Math.PI * Math.random());
+      p.setFromSpherical(spherical);
       initial.set([p.x, p.y, p.z], i * 3);
 
       // Final torus position

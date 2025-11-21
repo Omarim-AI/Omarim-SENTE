@@ -4,40 +4,51 @@ const MedicalMiracleEngine = require('../../../core/medical_miracle_engine');
 
 const miracleEngine = new MedicalMiracleEngine();
 
-// 🌟 Universal Healing Endpoints
-router.post('/activate-god-mode', async (req, res) => {
+// Core Healing Endpoints
+router.post('/activate-omarim-mode', async (req, res) => {
   try {
-    const result = await miracleEngine.activateGodMode();
+    const result = await miracleEngine.activateOmarimMode();
     res.json(result);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-router.post('/universal-healing', async (req, res) => {
+router.post('/stroke-reversal', async (req, res) => {
   try {
-    const { miracles } = req.body;
-    const result = await miracleEngine.performUniversalHealing(miracles);
+    const { patientData, strokeType } = req.body;
+    const result = await miracleEngine.performStrokeReversal(patientData, strokeType);
     res.json(result);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-router.post('/cure-hiv', async (req, res) => {
+router.post('/brain-repair', async (req, res) => {
   try {
-    const { patientData } = req.body;
-    const result = await miracleEngine.performUniversalHealing(patientData, ['HIV']);
+    const { patientData, damageAssessment } = req.body;
+    const result = await miracleEngine.repairBrainDamage(patientData, damageAssessment);
     res.json(result);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-router.post('/cure-sickle-cell', async (req, res) => {
+// Device Integration Endpoints
+router.post('/device/scan', async (req, res) => {
   try {
-    const { patientData } = req.body;
-    const result = await miracleEngine.performUniversalHealing(patientData, ['SICKLE_CELL']);
+    const { deviceId, patientData, scanType } = req.body;
+    const result = await miracleEngine.performQuantumScan(deviceId, patientData, scanType);
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.post('/device/treatment', async (req, res) => {
+  try {
+    const { deviceId, patientData, treatmentProtocol } = req.body;
+    const result = await miracleEngine.executeDeviceTreatment(deviceId, patientData, treatmentProtocol);
     res.json(result);
   } catch (error) {
     res.status(500).json({ error: error.message });

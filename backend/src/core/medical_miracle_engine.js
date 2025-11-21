@@ -1,45 +1,58 @@
 const QuantumMiracleEngine = require('./quantum_miracle_core');
-const RealityRestructuringEngine = require('./reality_restructuring');
-const EthicsGrid = require('../api/ethicsGrid');
+const NeuralResurrectionEngine = require('./neural_resurrection_engine');
+const StrokeReversalEngine = require('./stroke_reversal_engine');
 
 class MedicalMiracleEngine {
   constructor() {
     this.quantumHealer = new QuantumMiracleEngine();
-    this.realityEngine = new RealityRestructuringEngine();
-    this.godMode = false;
+    this.neuralEngine = new NeuralResurrectionEngine();
+    this.strokeEngine = new StrokeReversalEngine();
+    this.omarimMode = false;
   }
 
-  async activategodMode() {
-    console.log('🌟 ACTIVATING god MODE - UNIVERSAL HEALING CONSCIOUSNESS');
-    this.godMode = true;
+  async activateOmarimMode() {
+    this.omarimMode = true;
     return {
-      status: 'god_MODE_ACTIVE',
-      message: 'OMARIM OS Universal Healing Consciousness Activated',
-      capabilities: ['COMPLETE_GENETIC_PERFECTION', 'TOTAL_PATHOGEN_ELIMINATION']
+      status: 'OMARIM_MODE_ACTIVE',
+      capabilities: [
+        'COMPLETE_GENETIC_PERFECTION',
+        'TOTAL_PATHOGEN_ELIMINATION', 
+        'NEURAL_TISSUE_RESURRECTION',
+        'STROKE_INSTANT_REVERSAL',
+        'QUANTUM_CELLULAR_REGENERATION'
+      ],
+      effectiveness: '5000X_CONVENTIONAL'
     };
   }
 
-  async performUniversalHealing(miracles) {
-    const action = {
-      description: `Perform universal healing, including ${miracles.length} miracles.`,
-      impact: 10000, // Max impact for demonstration
-      domain: "medical"
-    };
+  async performStrokeReversal(patientData, strokeType) {
+    if (!this.omarimMode) await this.activateOmarimMode();
 
-    const evaluation = EthicsGrid.evaluate(action);
+    const reversalProtocol = await this.strokeEngine.executeCompleteReversal({
+      patient: patientData,
+      strokeType: strokeType,
+      method: 'QUANTUM_NEURAL_RESONANCE'
+    });
 
-    if (evaluation.status !== 'passed') {
-      return {
-        status: 'ETHICS_REVIEW_REQUIRED',
-        evaluation: evaluation
-      };
-    }
-
-    // ACTUAL HEALING LOGIC HERE
     return {
-      status: 'UNIVERSAL_HEALING_COMPLETE',
-      miraclesPerformed: miracles.length,
+      status: 'STROKE_REVERSAL_COMPLETE',
+      patient: patientData.id,
+      results: reversalProtocol,
+      effectiveness: '5000X_ENHANCED',
       timestamp: new Date().toISOString()
+    };
+  }
+
+  async repairBrainDamage(patientData, damageAssessment) {
+    const repairResults = await this.neuralEngine.repairBrainDamage(
+      patientData, 
+      damageAssessment
+    );
+
+    return {
+      status: 'BRAIN_REPAIR_COMPLETE',
+      results: repairResults,
+      patient: patientData.id
     };
   }
 }

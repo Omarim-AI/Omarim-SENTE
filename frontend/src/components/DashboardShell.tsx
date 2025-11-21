@@ -2,9 +2,8 @@ import React, { Suspense, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Canvas } from '@react-three/fiber';
 import { ARButton, XR } from '@react-three/xr';
-import { Vector3 } from 'three';
 
-import CognitionSphere from './dashboard/CognitionSphere';
+import CognitionSphere from './CognitionSphere';
 import PanelBioGenesis from './dashboard/PanelBioGenesis';
 import PanelSystemsMatrix from './dashboard/PanelSystemsMatrix';
 import PanelOmniCore from './dashboard/PanelOmniCore';
@@ -18,7 +17,7 @@ import CameraControl from './dashboard/CameraControl';
 import LogoutButton from './LogoutButton';
 
 const DashboardShell: React.FC = () => {
-  const [cameraTarget, setCameraTarget] = useState<Vector3 | [number, number, number] | null>(null);
+  const [cameraTarget, setCameraTarget] = useState<[number, number, number] | null>(null);
   const [zoom, setZoom] = useState<number>(1);
   const [isBioGenesisOpen, setBioGenesisOpen] = useState<boolean>(true);
   const [isSystemsMatrixOpen, setSystemsMatrixOpen] = useState<boolean>(true);
@@ -64,7 +63,7 @@ const DashboardShell: React.FC = () => {
     <>
       <ARButton />
       <Canvas>
-        <XR>
+        <XR store={undefined}>
           <VRComponent />
           <fog attach="fog" args={['#000510', 5, 20]} />
           <Suspense fallback={null}>
@@ -80,7 +79,7 @@ const DashboardShell: React.FC = () => {
 
             <DashboardEffects />
             <MultiUserPaths />
-            <CameraControl target={cameraTarget} zoom={zoom} />
+            <CameraControl target={cameraTarget ?? undefined} zoom={zoom} />
           </Suspense>
         </XR>
       </Canvas>

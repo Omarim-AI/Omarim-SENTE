@@ -1,0 +1,109 @@
+[debug] [2025-11-18T13:09:10.246Z] ----------------------------------------------------------------------
+[debug] [2025-11-18T13:09:10.248Z] Command:       /nix/store/ws50yvm6vzlzf7jzz6n7xh4szddrack1-nodejs-20.19.1/bin/node /nix/store/f77kilzcw5hh2gidh22k6pj8cp7pxp7h-firebase-tools-14.22.0/lib/node_modules/firebase-tools/lib/bin/firebase.js emulators:start
+[debug] [2025-11-18T13:09:10.248Z] CLI Version:   14.22.0
+[debug] [2025-11-18T13:09:10.248Z] Platform:      linux
+[debug] [2025-11-18T13:09:10.248Z] Node Version:  v20.19.1
+[debug] [2025-11-18T13:09:10.248Z] Time:          Tue Nov 18 2025 13:09:10 GMT+0000 (Coordinated Universal Time)
+[debug] [2025-11-18T13:09:10.248Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-11-18T13:09:10.250Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2025-11-18T13:09:10.501Z] No OAuth tokens found
+[debug] [2025-11-18T13:09:10.501Z] No OAuth tokens found
+[error] Failed to fetch Firebase Project from current Studio Workspace: Unable to refresh auth: not yet authenticated.
+[debug] [2025-11-18T13:09:10.506Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-11-18T13:09:10.745Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
+[debug] [2025-11-18T13:09:10.745Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}
+[debug] [2025-11-18T13:09:20.502Z] Running auto auth
+[info] i  emulators: Starting emulators: functions, eventarc, tasks, extensions {"metadata":{"emulator":{"name":"hub"},"message":"Starting emulators: functions, eventarc, tasks, extensions"}}
+[debug] [2025-11-18T13:09:20.518Z] No OAuth tokens found
+[debug] [2025-11-18T13:09:20.519Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/omarim-soe [none]
+[debug] [2025-11-18T13:09:20.703Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/omarim-soe 200
+[debug] [2025-11-18T13:09:20.703Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/omarim-soe {"projectNumber":"764801755640","projectId":"omarim-soe","lifecycleState":"ACTIVE","name":"OMARIM SOE","labels":{"firebase":"enabled","firebase-core":"disabled"},"createTime":"2025-11-13T02:11:55.484983Z"}
+[debug] [2025-11-18T13:09:20.709Z] assigned listening specs for emulators {"user":{"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400}],"ui":[{"address":"127.0.0.1","family":"IPv4","port":4000}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}]},"metadata":{"message":"assigned listening specs for emulators"}}
+[debug] [2025-11-18T13:09:20.713Z] Emulator locator file path: /tmp/hub-omarim-soe.json
+[debug] [2025-11-18T13:09:20.713Z] [hub] writing locator at /tmp/hub-omarim-soe.json
+[debug] [2025-11-18T13:09:20.718Z] [Extensions] Started Extensions emulator, this is a noop.
+[debug] [2025-11-18T13:09:20.719Z] late-assigned ports for functions and eventarc emulators {"user":{"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400}],"ui":[{"address":"127.0.0.1","family":"IPv4","port":4000}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}],"functions":[{"address":"127.0.0.1","family":"IPv4","port":5001}],"eventarc":[{"address":"127.0.0.1","family":"IPv4","port":9299}],"tasks":[{"address":"127.0.0.1","family":"IPv4","port":9499}]},"metadata":{"message":"late-assigned ports for functions and eventarc emulators"}}
+[warn] ⚠  functions: The following emulators are not running, calls to these services from the Functions emulator will affect production: apphosting, auth, firestore, database, hosting, pubsub, storage, dataconnect {"metadata":{"emulator":{"name":"functions"},"message":"The following emulators are not running, calls to these services from the Functions emulator will affect production: apphosting, auth, firestore, database, hosting, pubsub, storage, dataconnect"}}
+[warn] ⚠  functions: Application Default Credentials detected. Non-emulated services will access production using these credentials. Be careful! {"metadata":{"emulator":{"name":"functions"},"message":"Application Default Credentials detected. Non-emulated services will access production using these credentials. Be careful!"}}
+[debug] [2025-11-18T13:09:33.713Z] No OAuth tokens found
+[debug] [2025-11-18T13:09:33.713Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/omarim-soe/adminSdkConfig [none]
+[debug] [2025-11-18T13:09:33.926Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/omarim-soe/adminSdkConfig 200
+[debug] [2025-11-18T13:09:33.926Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/omarim-soe/adminSdkConfig {"projectId":"omarim-soe","storageBucket":"omarim-soe.firebasestorage.app"}
+[debug] [2025-11-18T13:09:33.952Z] [Extensions] Connecting Extensions emulator, this is a noop.
+[info] i  functions: Watching "/home/user/omarim-sente/backend" for Cloud Functions... {"metadata":{"emulator":{"name":"functions"},"message":"Watching \"/home/user/omarim-sente/backend\" for Cloud Functions..."}}
+[error] ⬢  functions: Failed to load function definition from source: FirebaseError: `runtime` field is required but was not found in firebase.json or package.json.
+To fix this, add the following lines to the `functions` section of your firebase.json:
+"runtime": "nodejs22" or set the "engine" field in package.json
+ {"metadata":{"emulator":{"name":"functions"},"message":"Failed to load function definition from source: FirebaseError: `runtime` field is required but was not found in firebase.json or package.json.\nTo fix this, add the following lines to the `functions` section of your firebase.json:\n\"runtime\": \"nodejs22\" or set the \"engine\" field in package.json\n"}}
+[debug] [2025-11-18T13:09:33.966Z] Could not find VSCode notification endpoint: FetchError: request to http://localhost:40001/vscode/notify failed, reason: connect ECONNREFUSED 127.0.0.1:40001. If you are not running the Firebase Data Connect VSCode extension, this is expected and not an issue.
+[info] 
+┌─────────────────────────────────────────────────────────────┐
+│ ✔  All emulators ready! It is now safe to connect your app. │
+│ i  View Emulator UI at http://127.0.0.1:4000/               │
+└─────────────────────────────────────────────────────────────┘
+
+┌─────────────┬────────────────┬──────────────────────────────────┐
+│ Emulator    │ Host:Port      │ View in Emulator UI              │
+├─────────────┼────────────────┼──────────────────────────────────┤
+│ Functions   │ 127.0.0.1:5001 │ http://127.0.0.1:4000/functions  │
+├─────────────┼────────────────┼──────────────────────────────────┤
+│ Eventarc    │ 127.0.0.1:9299 │ n/a                              │
+├─────────────┼────────────────┼──────────────────────────────────┤
+│ Cloud Tasks │ 127.0.0.1:9499 │ n/a                              │
+├─────────────┼────────────────┼──────────────────────────────────┤
+│ Extensions  │ 127.0.0.1:5001 │ http://127.0.0.1:4000/extensions │
+└─────────────┴────────────────┴──────────────────────────────────┘
+  Emulator Hub host: 127.0.0.1 port: 4400
+  Other reserved ports: 4500
+┌─────────────────────────┬───────────────┬─────────────────────┐
+│ Extension Instance Name │ Extension Ref │ View in Emulator UI │
+└─────────────────────────┴───────────────┴─────────────────────┘
+Issues? Report them at https://github.com/firebase/firebase-tools/issues and attach the *-debug.log files.
+ 
+[debug] [2025-11-18T13:09:38.021Z] Functions emulator received unknown request at path /
+[debug] [2025-11-18T13:09:38.258Z] Eventarc emulator received unknown request at path / {"metadata":{"emulator":{"name":"eventarc"},"message":"Eventarc emulator received unknown request at path /"}}
+[debug] [2025-11-18T13:14:22.436Z] ----------------------------------------------------------------------
+[debug] [2025-11-18T13:14:22.437Z] Command:       /nix/store/ws50yvm6vzlzf7jzz6n7xh4szddrack1-nodejs-20.19.1/bin/node /nix/store/f77kilzcw5hh2gidh22k6pj8cp7pxp7h-firebase-tools-14.22.0/lib/node_modules/firebase-tools/lib/bin/firebase.js init
+[debug] [2025-11-18T13:14:22.438Z] CLI Version:   14.22.0
+[debug] [2025-11-18T13:14:22.438Z] Platform:      linux
+[debug] [2025-11-18T13:14:22.438Z] Node Version:  v20.19.1
+[debug] [2025-11-18T13:14:22.438Z] Time:          Tue Nov 18 2025 13:14:22 GMT+0000 (Coordinated Universal Time)
+[debug] [2025-11-18T13:14:22.438Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-11-18T13:14:22.636Z] No OAuth tokens found
+[debug] [2025-11-18T13:14:22.636Z] No OAuth tokens found
+[error] Failed to fetch Firebase Project from current Studio Workspace: Unable to refresh auth: not yet authenticated.
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  /home/user/omarim-sente/backend
+
+Before we get started, keep in mind:
+
+  * You are initializing within an existing Firebase project directory
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] 
+[debug] [2025-11-18T13:17:36.988Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-11-18T13:17:36.989Z] > authorizing via signed-in user (okeynwaonye@gmail.com)
+[debug] [2025-11-18T13:17:36.989Z] No OAuth tokens found
+[debug] [2025-11-18T13:17:36.989Z] No OAuth tokens found
+[debug] [2025-11-18T13:17:36.989Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-11-18T13:17:36.989Z] > authorizing via signed-in user (okeynwaonye@gmail.com)
+[debug] [2025-11-18T13:17:36.991Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/omarim-soe [none]
+[debug] [2025-11-18T13:17:37.270Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/omarim-soe 200
+[debug] [2025-11-18T13:17:37.270Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/omarim-soe {"projectId":"omarim-soe","projectNumber":"764801755640","displayName":"OMARIM SOE","name":"projects/omarim-soe","resources":{"hostingSite":"omarim-soe"},"state":"ACTIVE","etag":"1_81c2d424-7e24-4a7e-b9ce-14d5fb6780ef"}
+[info] i  Using project omarim-soe (OMARIM SOE) . 
+[info] 
+=== Emulators Setup

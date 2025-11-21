@@ -1,0 +1,29 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Patient data - authenticated users only
+    match /patients/{patientId} {
+      allow read, write: if request.auth != null 
+        && request.auth.token.email_verified == true;
+      allow create: if request.auth != null;
+    }
+    
+    // Treatment sessions
+    match /sessions/{sessionId} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Device data
+    match /devices/{deviceId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null 
+        && request.auth.token.admin == true;
+    }
+    
+    // System monitoring
+    match /monitoring/{document} {
+      allow read, write: if request.auth != null 
+        && request.auth.token.admin == true;
+    }
+  }
+}

@@ -1,11 +1,13 @@
+import { AnimatePresence, motion } from 'framer-motion';
+import { Atom, Heart, Infinity, Shield, Sparkles, Zap } from 'lucide-react';
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Zap, Heart, Star, Shield, Sparkles, Infinity, Atom } from 'lucide-react';
 
 const UniversalHealer = () => {
   const [activeMiracle, setActiveMiracle] = useState(null);
   const [healingProgress, setHealingProgress] = useState({});
   const [miraclesPerformed, setMiraclesPerformed] = useState(0);
+  const [ethicsEvaluation, setEthicsEvaluation] = useState(null);
+  const [error, setError] = useState(null);
 
   const miracles = [
     {
@@ -14,7 +16,7 @@ const UniversalHealer = () => {
       description: 'Eliminate all genetic disorders, perfect DNA, optimize genome',
       color: 'from-purple-500 to-pink-500',
       icon: <Atom className="w-8 h-8" />,
-      conditions: ['Sickle Cell', 'Cystic Fibrosis', 'Huntington\'s', 'All Genetic Diseases']
+      conditions: ['Sickle Cell', 'Cystic Fibrosis', "Huntington's", 'All Genetic Diseases']
     },
     {
       id: 'viral-eradication',
@@ -54,7 +56,7 @@ const UniversalHealer = () => {
       description: 'Heal all mental disorders, optimize brain function, perfect mind',
       color: 'from-indigo-500 to-purple-500',
       icon: <Zap className="w-8 h-8" />,
-      conditions: ['Alzheimer\'s', 'Depression', 'Autism', 'All Mental Disorders']
+      conditions: ["Alzheimer's", 'Depression', 'Autism', 'All Mental Disorders']
     }
   ];
 
@@ -77,37 +79,86 @@ const UniversalHealer = () => {
   };
 
   const performAllMiracles = async () => {
-    const miraclesToPerform = miracles.map(miracle => ({ id: miracle.id, name: miracle.name }));
-    const response = await fetch('/api/v1/medical/universal-healing', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ miracles: miraclesToPerform }),
-    });
-    const data = await response.json();
-    console.log(data);
+    setEthicsEvaluation(null);
+    setError(null);
+    try {
+      const miraclesToPerform = miracles.map(miracle => ({ id: miracle.id, name: miracle.name }));
+      const response = await fetch('/api/v1/medical/universal-healing', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        },
+        body: JSON.stringify({ miracles: miraclesToPerform }),
+      });
+      const data = await response.json();
 
-    if (response.ok) {
-      miracles.forEach(miracle => setActiveMiracle(miracle.id));
+      if (data.status === 'ETHICS_REVIEW_REQUIRED' || data.status === 'ACTION_BLOCKED') {
+        setEthicsEvaluation(data.evaluation);
+      } else if (response.ok) {
+        miracles.forEach(miracle => setActiveMiracle(miracle.id));
 
-      for (let i = 0; i <= 100; i++) {
-        await new Promise(resolve => setTimeout(resolve, 30));
-        const newHealingProgress = {};
-        miracles.forEach(miracle => {
-          newHealingProgress[miracle.id] = i;
-        });
-        setHealingProgress(newHealingProgress);
+        for (let i = 0; i <= 100; i++) {
+          await new Promise(resolve => setTimeout(resolve, 30));
+          const newHealingProgress = {};
+          miracles.forEach(miracle => {
+            newHealingProgress[miracle.id] = i;
+          });
+          setHealingProgress(newHealingProgress);
 
-        if (i === 100) {
-          setMiraclesPerformed(prev => prev + miracles.length);
-          setTimeout(() => {
-            miracles.forEach(miracle => setActiveMiracle(null));
-            setHealingProgress({});
-          }, 2000);
+          if (i === 100) {
+            setMiraclesPerformed(prev => prev + miracles.length);
+            setTimeout(() => {
+              miracles.forEach(miracle => setActiveMiracle(null));
+              setHealingProgress({});
+            }, 2000);
+          }
         }
+      } else {
+        setError(data.error || 'An unknown error occurred.');
       }
+    } catch (err) {
+      setError('Failed to connect to the server. Please check your connection.');
     }
+  };
+
+  const getEthicsReviewUI = () => {
+    if (!ethicsEvaluation) return null;
+
+    const isFailed = ethicsEvaluation.status === 'failed';
+    const bgColor = isFailed ? 'bg-red-900/50' : 'bg-yellow-900/50';
+    const borderColor = isFailed ? 'border-red-500/30' : 'border-yellow-500/30';
+    const titleColor = isFailed ? 'text-red-400' : 'text-yellow-400';
+    const title = isFailed ? '🚨 ACTION BLOCKED BY ETHICS PROTOCOLS 🚨' : '⚠️ ETHICS REVIEW REQUIRED ⚠️';
+
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        className={`max-w-4xl mx-auto mt-12 ${bgColor} rounded-3xl p-6 border ${borderColor} backdrop-blur-lg`}
+      >
+        <h2 className={`text-3xl font-bold ${titleColor} mb-6 text-center`}>
+          {title}
+        </h2>
+        <div className="text-white text-lg">
+          <p className="mb-4"><strong>Status:</strong> <span className={titleColor}>{ethicsEvaluation.status}</span></p>
+          <p className="mb-4"><strong>Final Score:</strong> <span className={titleColor}>{ethicsEvaluation.finalScore}</span> (Threshold: {ethicsEvaluation.threshold})</p>
+          <p className="mb-4"><strong>Recommendation:</strong> {ethicsEvaluation.recommendation}</p>
+          {ethicsEvaluation.violations && ethicsEvaluation.violations.length > 0 && (
+            <div>
+              <h3 className={`text-2xl font-bold ${titleColor} mb-2`}>Violations:</h3>
+              <ul className="list-disc list-inside space-y-2">
+                {ethicsEvaluation.violations.map((violation, index) => (
+                  <li key={index}>
+                    <strong>{violation.principle}:</strong> {violation.explanation} (Score Impact: {violation.scoreImpact})
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      </motion.div>
+    );
   };
 
   return (
@@ -137,6 +188,20 @@ const UniversalHealer = () => {
           Miracles Performed: <span className="text-yellow-400 text-2xl">{miraclesPerformed}</span>
         </p>
       </motion.div>
+      {error && (
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="max-w-4xl mx-auto mt-12 bg-red-900/50 rounded-3xl p-6 border border-red-500/30 backdrop-blur-lg"
+        >
+          <h2 className="text-3xl font-bold text-red-400 mb-6 text-center">
+            An Error Occurred
+          </h2>
+          <div className="text-white text-lg text-center">
+            <p>{error}</p>
+          </div>
+        </motion.div>
+      )}
 
       {/* MIRACLE GRID */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto mb-12">
@@ -229,6 +294,9 @@ const UniversalHealer = () => {
           />
         </button>
       </motion.div>
+
+      {/* ETHICS REVIEW SECTION */}
+      {getEthicsReviewUI()}
 
       {/* REAL-TIME MIRACLE FEED */}
       <motion.div

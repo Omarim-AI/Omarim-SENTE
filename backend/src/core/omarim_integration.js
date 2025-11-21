@@ -9,7 +9,6 @@ class OmarimIntegration {
             this.connectToCognitionGrid(),
             this.connectToQuantumPrediction(),
             this.connectToEthicsGrid(),
-            // ADD THIS NEW LINE:
             this.activateGlobalConsciousness()
         ]);
         
@@ -36,7 +35,6 @@ class OmarimIntegration {
         return { system: 'ethics_grid', connected: true, status: 'harmonized' };
     }
 
-    // ADD THIS NEW METHOD:
     static async activateGlobalConsciousness() {
         console.log('🧠 ACTIVATING GLOBAL HUMAN CONSCIOUSNESS...');
         const result = await global_consciousness.activate_human_network();

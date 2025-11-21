@@ -48,4 +48,19 @@ describe('Auth Middleware', () => {
     expect(res.body.message).toBe('Success');
     expect(res.body.user).toEqual({ uid: 'test-user' });
   });
+
+  it('should log an error if the environment is not \'test\'', async () => {
+    const originalNodeEnv = process.env.NODE_ENV;
+    process.env.NODE_ENV = 'development';
+    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+    await request(app)
+      .get('/test')
+      .set('Authorization', 'Bearer invalid-token');
+
+    expect(consoleErrorSpy).toHaveBeenCalled();
+
+    consoleErrorSpy.mockRestore();
+    process.env.NODE_ENV = originalNodeEnv;
+  });
 });

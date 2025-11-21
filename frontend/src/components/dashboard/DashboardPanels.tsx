@@ -36,7 +36,9 @@ const Panel: React.FC<PanelProps> = ({ shape, color, position, title }) => {
         {geometry}
         <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.5} side={THREE.DoubleSide} />
       </mesh>
-      <Text text={title} position={[0, 0, 0.2]} fontSize={0.3} color="white" anchorX="center" anchorY="middle" />
+      <Text position={[0, 0, 0.2]} fontSize={0.3} color="white" anchorX="center" anchorY="middle">
+        {title}
+      </Text>
     </group>
   );
 };

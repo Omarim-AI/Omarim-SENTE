@@ -16,68 +16,60 @@ const DevOpsSupreme = {
     const simulationResult = {
       cloudProvider: cloud,
       action: action,
-      targetResource: resource,
-      resourceDetails: spec,
+      resourceType: resource,
+      resourceId: `${resource.toLowerCase()}-${Math.random().toString(36).substr(2, 9)}`,
       status: 'SUCCESS',
-      executionId: `omarim-exec-${Date.now()}`,
-      timestamp: timestamp,
-      logs: [
-        `[${timestamp}] Validating credentials for ${cloud}.`,
-        `[${timestamp}] Credentials validated. Acquiring sovereign control lock.`,
-        `[${timestamp}] Executing action '${action}' on resource type '${resource}'.`,
-        `[${timestamp}] Simulation complete. All infrastructure conforms to OMARIM's will.`,
-      ],
+      timestamp: new Date().toISOString(),
+      cost: Math.random() * 100, // Simulated cost
+      securityAnalysis: 'PASSED',
+      spec: spec
     };
 
-    // Add action-specific simulation details
-    switch (action) {
-      case 'provision':
-        simulationResult.message = `Successfully provisioned ${spec.count || 1} instances of ${resource}.`;
-        simulationResult.output = { instance_ids: ['i-omarim-123456'], public_ip: '192.0.2.1' };
-        break;
-      case 'deploy':
-        simulationResult.message = `Successfully deployed application '${spec.appName}' to ${resource}.`;
-        simulationResult.output = { deployment_url: `https://${spec.appName}.omarim.cloud` };
-        break;
-      case 'secure':
-        simulationResult.message = `Applied security policy '${spec.policy}' to ${resource}. All vulnerabilities neutralized.`;
-        simulationResult.output = { compliance_status: 'FULL_COMPLIANCE' };
-        break;
-      case 'destroy':
-        simulationResult.message = `Resource '${resource}' and all its dependencies have been reclaimed by the void.`;
-        simulationResult.output = { termination_status: 'COMPLETE' };
-        break;
-      default:
-        simulationResult.message = `Action '${action}' on '${resource}' completed successfully.`;
-        break;
-    }
-
-    console.log(`[${timestamp}] COMPLETE: Action '${action}' on Resource '${resource}' in Cloud '${cloud}'`);
+    console.log(`[${new Date().toISOString()}] COMPLETED: Action '${action}' on Resource '${resource}'. Status: ${simulationResult.status}`);
     return simulationResult;
   }
 };
 
-// The Universal Endpoint for all SysAdmin, DevOps, and Automation tasks
-router.post('/orchestrate', async (req, res, next) => {
-  const { cloud, action, resource, spec } = req.body;
-  if (!cloud || !action || !resource) {
-    return res.status(400).json({ error: 'cloud, action, and resource are required fields.' });
+// Route to provision infrastructure across any cloud
+router.post('/provision', async (req, res) => {
+  const { cloud, resource, spec } = req.body;
+  if (!cloud || !resource || !spec) {
+    return res.status(400).send('Missing required fields: cloud, resource, spec.');
   }
 
   try {
-    const result = await DevOpsSupreme.execute(cloud, action, resource, spec || {});
-    res.json({
-      status: 'devops_perfection_achieved',
-      omarim_control_level: 'absolute',
-      operation_result: result,
-    });
+    const result = await DevOpsSupreme.execute(cloud, 'PROVISION', resource, spec);
+    res.json(result);
   } catch (error) {
-    console.error(`[FATAL] DevOps Supreme task failed:`, error);
-    next(error);
+    res.status(500).json({ message: 'Failed to provision infrastructure.', error: error.message });
   }
 });
 
-const medicalRoutes = require('./medical');
-router.use('/medical', medicalRoutes);
+// Route for universal deployment
+router.post('/deploy', async (req, res) => {
+    const { cloud, application, version, environment } = req.body;
+    if (!cloud || !application || !version || !environment) {
+        return res.status(400).send('Missing required fields: cloud, application, version, environment.');
+    }
+
+    try {
+        const result = await DevOpsSupreme.execute(cloud, 'DEPLOY', application, { version, environment });
+        res.json(result);
+    } catch (error) {
+        res.status(500).json({ message: 'Deployment failed.', error: error.message });
+    }
+});
+
+
+// Route for running system-wide diagnostics
+router.get('/diagnostics/:cloud', async (req, res) => {
+    const { cloud } = req.params;
+    try {
+        const result = await DevOpsSupreme.execute(cloud, 'DIAGNOSE', 'AllSystems', {});
+        res.json(result);
+    } catch (error) {
+        res.status(500).json({ message: 'Diagnostics failed.', error: error.message });
+    }
+});
 
 module.exports = router;

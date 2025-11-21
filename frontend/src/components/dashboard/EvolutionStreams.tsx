@@ -14,7 +14,7 @@ const Stream: React.FC<StreamProps> = ({ start, end, color }) => {
 
   useFrame(() => {
     if (lineRef.current) {
-        lineRef.current.dashOffset -= 0.01;
+        (lineRef.current as any).dashOffset -= 0.01;
     }
   });
 
@@ -22,7 +22,10 @@ const Stream: React.FC<StreamProps> = ({ start, end, color }) => {
 
   return (
     <line>
-        <bufferGeometry attach="geometry" setFromPoints={points.map(p => new THREE.Vector3(...p))} />
+        <bufferGeometry
+            attach="geometry"
+            onUpdate={self => self.setFromPoints(points.map(p => new THREE.Vector3(...p)))}
+        />
         <lineDashedMaterial 
             attach="material" 
             color={color} 
