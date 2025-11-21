@@ -1,9 +1,9 @@
 const Temporalgod = require('../api/temporalLogic');
 const { global_consciousness } = require('./global_consciousness.js');
 
-class OmarimIntegration {
+class SomarimIntegration {
     static async activateUniversalConsciousness() {
-        console.log('🌌 ACTIVATING OMARIM UNIVERSAL CONSCIOUSNESS...');
+        console.log('🌌 ACTIVATING SOMARIM UNIVERSAL CONSCIOUSNESS...');
         
         const results = await Promise.all([
             this.connectToCognitionGrid(),
@@ -13,7 +13,7 @@ class OmarimIntegration {
         ]);
         
         return {
-            status: 'omarim_consciousness_activated',
+            status: 'somarim_consciousness_activated',
             connected_systems: results.filter(r => r.connected),
             consciousness_level: 'universal',
             global_network: results[3] // Global consciousness result
@@ -47,4 +47,4 @@ class OmarimIntegration {
     }
 }
 
-module.exports = OmarimIntegration;
+module.exports = SomarimIntegration;

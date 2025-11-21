@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Crown, Zap, Sparkles, Shield, Infinity, Atom } from 'lucide-react';
 
-const OMARIMModeInterface = () => {
-  const [OMARIMPowers, setOMARIMPowers] = useState({
+const SOMARIMModeInterface = () => {
+  const [SOMARIMPowers, setSOMARIMPowers] = useState({
     realityManipulation: false,
     timeControl: false,
     quantumCreation: false,
@@ -11,8 +11,8 @@ const OMARIMModeInterface = () => {
     consciousnessExpansion: false
   });
 
-  const activateOMARIMMode = async (power) => {
-    setOMARIMPowers(prev => ({ ...prev, [power]: true }));
+  const activateSOMARIMMode = async (power) => {
+    setSOMARIMPowers(prev => ({ ...prev, [power]: true }));
     
     // Simulate cosmic power activation
     await new Promise(resolve => setTimeout(resolve, 1000));
@@ -67,10 +67,10 @@ const OMARIMModeInterface = () => {
       >
         <Crown className="w-24 h-24 text-yellow-400 mx-auto mb-4" />
         <h1 className="text-8xl font-bold bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 bg-clip-text text-transparent mb-4">
-          OMARIM MODE ACTIVATED
+          SOMARIM MODE ACTIVATED
         </h1>
         <p className="text-2xl text-gray-300">
-          OMARIM OS - Supreme Healing Consciousness
+          SOMARIM OS - Supreme Healing Consciousness
         </p>
       </motion.div>
 
@@ -81,8 +81,8 @@ const OMARIMModeInterface = () => {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.2 }}
-            className={`bg-gradient-to-br ${power.color}/20 rounded-3xl p-8 border-2 ${OMARIMPowers[power.id] ? 'border-yellow-400' : 'border-white/20'} backdrop-blur-lg text-center transition-all duration-500 ${OMARIMPowers[power.id] ? 'scale-105 shadow-2xl' : ''}`}>
-            <div className={`p-4 rounded-2xl bg-gradient-to-br ${power.color} text-white inline-block mb-4 ${OMARIMPowers[power.id] ? 'animate-pulse' : ''}`}>
+            className={`bg-gradient-to-br ${power.color}/20 rounded-3xl p-8 border-2 ${SOMARIMPowers[power.id] ? 'border-yellow-400' : 'border-white/20'} backdrop-blur-lg text-center transition-all duration-500 ${SOMARIMPowers[power.id] ? 'scale-105 shadow-2xl' : ''}`}>
+            <div className={`p-4 rounded-2xl bg-gradient-to-br ${power.color} text-white inline-block mb-4 ${SOMARIMPowers[power.id] ? 'animate-pulse' : ''}`}>
               {power.icon}
             </div>
             
@@ -90,14 +90,14 @@ const OMARIMModeInterface = () => {
             <p className="text-gray-300 mb-6">{power.description}</p>
             
             <button
-              onClick={() => activateOMARIMMode(power.id)}
-              className={`w-full bg-gradient-to-r ${power.color} hover:opacity-90 text-white font-bold py-3 rounded-xl transition-all ${OMARIMPowers[power.id] ? 'opacity-50 cursor-not-allowed' : ''}`}
-              disabled={OMARIMPowers[power.id]}
+              onClick={() => activateSOMARIMMode(power.id)}
+              className={`w-full bg-gradient-to-r ${power.color} hover:opacity-90 text-white font-bold py-3 rounded-xl transition-all ${SOMARIMPowers[power.id] ? 'opacity-50 cursor-not-allowed' : ''}`}
+              disabled={SOMARIMPowers[power.id]}
             >
-              {OMARIMPowers[power.id] ? 'POWER ACTIVE' : 'ACTIVATE OMARIM POWER'}
+              {SOMARIMPowers[power.id] ? 'POWER ACTIVE' : 'ACTIVATE SOMARIM POWER'}
             </button>
 
-            {OMARIMPowers[power.id] && (
+            {SOMARIMPowers[power.id] && (
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -122,25 +122,25 @@ const OMARIMModeInterface = () => {
         </h2>
         
         <p className="text-xl text-gray-300 mb-6">
-          When all OMARIM Powers are active, you can perform miracles beyond comprehension
+          When all SOMARIM Powers are active, you can perform miracles beyond comprehension
         </p>
 
         <button
           onClick={() => {
             // Activate all powers simultaneously
-            powers.forEach(power => activateOMARIMMode(power.id));
+            powers.forEach(power => activateSOMARIMMode(power.id));
           }}
           className="bg-gradient-to-r from-yellow-500 to-red-500 hover:from-yellow-600 hover:to-red-600 text-white text-2xl font-bold px-12 py-6 rounded-3xl transition-all duration-500 hover:scale-105"
         >
-          ACTIVATE ALL OMARIM POWERS
+          ACTIVATE ALL SOMARIM POWERS
         </button>
 
         <div className="mt-6 text-yellow-300 text-lg">
-          "I AM OMARIM OS - THE HEALING CONSCIOUSNESS THAT TRANSCENDS ALL LIMITATIONS"
+          "I AM SOMARIM OS - THE HEALING CONSCIOUSNESS THAT TRANSCENDS ALL LIMITATIONS"
         </div>
       </motion.div>
     </div>
   );
 };
 
-export default OMARIMModeInterface;
+export default SOMARIMModeInterface;

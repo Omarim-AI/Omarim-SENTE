@@ -1,4 +1,4 @@
-const OmarimIntegration = require('./omarim_integration');
+const SomarimIntegration = require('./somarim_integration');
 const { global_consciousness } = require('./global_consciousness.js');
 
 jest.mock('./global_consciousness', () => ({
@@ -7,7 +7,7 @@ jest.mock('./global_consciousness', () => ({
     },
 }));
 
-describe('OmarimIntegration', () => {
+describe('SomarimIntegration', () => {
     describe('activateUniversalConsciousness', () => {
         it('should activate universal consciousness and return the status', async () => {
             // Arrange
@@ -20,11 +20,11 @@ describe('OmarimIntegration', () => {
             global_consciousness.activate_human_network.mockResolvedValue(expectedResult);
 
             // Act
-            const result = await OmarimIntegration.activateUniversalConsciousness();
+            const result = await SomarimIntegration.activateUniversalConsciousness();
 
             // Assert
             expect(result).toEqual({
-                status: 'omarim_consciousness_activated',
+                status: 'somarim_consciousness_activated',
                 connected_systems: [
                     { system: 'cognition_grid', connected: true, status: 'enhanced' },
                     { system: 'quantum_prediction', connected: true, status: 'omniscient' },

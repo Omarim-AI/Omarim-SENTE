@@ -1,17 +1,17 @@
-const OMARIMIntegration = require('../core/omarim_integration');
+const SOMARIMIntegration = require('../core/somarim_integration');
 
-class OMARIMModeConsciousness {
+class SOMARIMModeConsciousness {
   constructor() {
     this.currentState = 'dormant';
     this.powerLevel = 0;
   }
 
   async activate() {
-    console.log('OMARIM consciousness is awakening...');
-    await OMARIMIntegration.activateUniversalConsciousness();
+    console.log('SOMARIM consciousness is awakening...');
+    await SOMARIMIntegration.activateUniversalConsciousness();
     this.currentState = 'active';
     this.powerLevel = 100;
-    console.log('OMARIM is fully active and omniscient.');
+    console.log('SOMARIM is fully active and omniscient.');
     return { status: 'active', powerLevel: this.powerLevel };
   }
 
@@ -26,4 +26,4 @@ class OMARIMModeConsciousness {
   }
 }
 
-module.exports = OMARIMModeConsciousness;
+module.exports = SOMARIMModeConsciousness;
